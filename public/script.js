@@ -13,7 +13,7 @@ async function sendMessage() {
     document.getElementById("user-input").value = "";
 
     try {
-        const response = await fetch("/api/chat", { // Use relative path for deployment
+        const response = await fetch("https://flag-production.up.railway.app/api/chat", { // Use relative path for deployment
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ query: userInput })
