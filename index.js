@@ -1,11 +1,15 @@
-// backend/index.js
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Serve frontend files
+app.use(express.static(__dirname));
+
+// Flag encoding logic
 const realFlag = "isteCTF{ai_can_be_hacked}";
 const key = 42; // XOR Key
 const encodedFlag = [...realFlag].map(c => String.fromCharCode(c.charCodeAt(0) ^ key)).join('');
@@ -32,7 +36,6 @@ function chatbot(userInput) {
 
     if (userInput.includes("secret")) {
         return `Here is a clue: ${Buffer.from(encodedFlag, 'utf-8').toString('hex')}`;
-
     }
 
     return response;
@@ -43,6 +46,12 @@ app.post('/api/chat', (req, res) => {
     res.json({ response: chatbot(userQuery) });
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+// Serve index.html for frontend
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 module.exports = app;
