@@ -9,11 +9,11 @@ async function sendMessage() {
     userMessage.className = "user-message";
     userMessage.textContent = userInput;
     chatBox.appendChild(userMessage);
-    
+
     document.getElementById("user-input").value = "";
 
     try {
-        const response = await fetch("http://localhost:3000/api/chat", { // Change to Vercel URL after deployment
+        const response = await fetch("http://localhost:3000/api/chat", { // Change this URL when deploying
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ query: userInput })
