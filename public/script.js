@@ -13,10 +13,11 @@ async function sendMessage() {
     document.getElementById("user-input").value = "";
 
     try {
-        const response = await fetch("http://localhost:3000/api/chat", { // Change this URL when deploying
+        const response = await fetch("/api/chat", { // Use relative path for deployment
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ query: userInput })
+     
         });
 
         const data = await response.json();
