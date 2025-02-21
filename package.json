@@ -1,13 +1,27 @@
 {
-  "name": "chatbot-project",
-  "version": "1.0.0",
-  "description": "A simple chatbot with Express and a frontend",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
+  "version": 2,
+  "builds": [
+    {
+      "src": "server/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "public/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "public/$1"
+    }
+  ],
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.3"
+    "express": "^4.21.2"
   }
 }
